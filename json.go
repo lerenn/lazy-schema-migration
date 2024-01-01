@@ -50,7 +50,7 @@ func (mj *MigratorJSON[T]) LastVersion() int {
 // Import imports a JSON object into the T type object, following migrations
 // set in the migrator.
 func (mj *MigratorJSON[T]) Import(data []byte) (T, error) {
-	version, err := getVersion(data)
+	version, err := mj.getVersion(data)
 	if err != nil {
 		return *new(T), err
 	}
@@ -72,7 +72,7 @@ func (mj *MigratorJSON[T]) Import(data []byte) (T, error) {
 	return output, err
 }
 
-func getVersion(data []byte) (int, error) {
+func (mj *MigratorJSON[T]) getVersion(data []byte) (int, error) {
 	var mappedEntry map[string]any
 	if err := json.Unmarshal(data, &mappedEntry); err != nil {
 		return 0, err

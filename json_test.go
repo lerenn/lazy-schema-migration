@@ -8,19 +8,15 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-func TestMigratorSuite(t *testing.T) {
-	suite.Run(t, new(MigratorSuite))
+func TestMigratorJSONSuite(t *testing.T) {
+	suite.Run(t, new(MigratorJSONSuite))
 }
 
-type MigratorSuite struct {
+type MigratorJSONSuite struct {
 	suite.Suite
 }
 
-type EntryV1 struct {
-	FirstName, LastName string
-}
-
-func entryV1ToV2(data []byte) ([]byte, error) {
+func jsonEntryV1ToV2(data []byte) ([]byte, error) {
 	return WrapperJSON(data, func(v1 EntryV1) (EntryV2, error) {
 		return EntryV2{
 			FullName: v1.FirstName + " " + v1.LastName,
@@ -28,11 +24,7 @@ func entryV1ToV2(data []byte) ([]byte, error) {
 	})
 }
 
-type EntryV2 struct {
-	FullName string
-}
-
-func entryV2ToV3(data []byte) ([]byte, error) {
+func jsonEntryV2ToV3(data []byte) ([]byte, error) {
 	return WrapperJSON(data, func(v2 EntryV2) (EntryV3, error) {
 		return EntryV3{
 			FullName: v2.FullName,
@@ -40,19 +32,14 @@ func entryV2ToV3(data []byte) ([]byte, error) {
 	})
 }
 
-type EntryV3 struct {
-	FullName string
-	Age      uint
-}
-
 var (
-	testMigrations = []MigrationJSON{
-		entryV1ToV2,
-		entryV2ToV3,
+	testJSONMigrations = []MigrationJSON{
+		jsonEntryV1ToV2,
+		jsonEntryV2ToV3,
 	}
 )
 
-func (suite *MigratorSuite) TestFromJSON() {
+func (suite *MigratorJSONSuite) TestFromJSON() {
 	input := struct {
 		FirstName, LastName string
 		Version             int `json:"__schema_version"`
@@ -68,14 +55,14 @@ func (suite *MigratorSuite) TestFromJSON() {
 		FullName: "first last",
 	}
 
-	mig := NewMigratorJSON[EntryV3](testMigrations)
+	mig := NewMigratorJSON[EntryV3](testJSONMigrations)
 	entry, err := mig.Import(inputByte)
 	suite.Require().NoError(err)
 	suite.Require().IsType(expectedOutput, entry)
 	suite.Require().Equal(expectedOutput, entry)
 }
 
-func (suite *MigratorSuite) TestToJSON() {
+func (suite *MigratorJSONSuite) TestToJSON() {
 	input := EntryV3{
 		FullName: "first last",
 		Age:      34,
@@ -84,7 +71,7 @@ func (suite *MigratorSuite) TestToJSON() {
 		fmt.Sprintf("{%q:%q,%q:%d,%q:%d}", "FullName", "first last", "Age", 34, VersionFieldKey, 3),
 	)
 
-	mig := NewMigratorJSON[EntryV3](testMigrations)
+	mig := NewMigratorJSON[EntryV3](testJSONMigrations)
 	output, err := mig.Export(input)
 	suite.Require().NoError(err)
 	suite.Require().Equal(string(expectedOutput), string(output))

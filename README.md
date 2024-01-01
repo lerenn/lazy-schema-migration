@@ -48,6 +48,7 @@ Code["PersonV2{\nFirstName string\nLastName string\n}"]--Save with actual versio
 
 ## Supported formats
 
+* BSON
 * JSON
 
 ## Install the library
@@ -88,4 +89,5 @@ Now the data can be saved in the database.
 
 ## Examples
 
+* [BSON](./examples/bson/bson.go)
 * [JSON](./examples/json/json.go)

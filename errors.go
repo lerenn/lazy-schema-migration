@@ -12,7 +12,7 @@ var (
 	// ErrNoVersion happens when no version is detected.
 	ErrNoVersion = fmt.Errorf("%w: no version detected", ErrGeneric)
 	// ErrInvalidVersionFormat happens when the version is not an integer.
-	ErrInvalidVersionFormat = fmt.Errorf("%w: version is not an integer", ErrGeneric)
+	ErrInvalidVersionFormat = fmt.Errorf("%w: version is not an expected format", ErrGeneric)
 	// ErrVersionNotFound happens when the given version is not found in migrations.
 	ErrVersionNotFound = fmt.Errorf("%w: version not found in migrations", ErrGeneric)
 	// ErrRunningMigration happens when a migration fails.
