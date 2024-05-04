@@ -1,4 +1,4 @@
-# Continuous-schema-migration
+# Lazy Schema Migration Library
 
 This is a golang library for on-the-fly/lazy migrations.
 
@@ -54,7 +54,7 @@ Code["PersonV2{\nFirstName string\nLastName string\n}"]--Save with actual versio
 ## Install the library
 
 ```bash
-go get github.com/lerenn/continuous-schema-migration
+go get github.com/lerenn/lazy-schema-migration
 ```
 
 ## How-To

@@ -1,4 +1,4 @@
-module github.com/lerenn/continuous-schema-migration
+module github.com/lerenn/lazy-schema-migration
 
 go 1.21.3
 

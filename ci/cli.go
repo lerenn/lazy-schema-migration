@@ -19,7 +19,7 @@ var (
 
 var rootCmd = &cobra.Command{
 	Use:   "./ci/dagger.go",
-	Short: "A simple CLI to execute continuous-schema-migration project CI/CD with dagger",
+	Short: "A simple CLI to execute lazy-schema-migration project CI/CD with dagger",
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) (err error) {
 		// Initialize Dagger client
 		client, err = dagger.Connect(context.Background(), dagger.WithLogOutput(os.Stderr))

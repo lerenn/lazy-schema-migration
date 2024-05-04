@@ -9,7 +9,7 @@ import (
 
 func sourceAsWorkdir(client *dagger.Client) func(r *dagger.Container) *dagger.Container {
 	// Set path where the source code is mounted.
-	containerDir := "/go/src/github.com/lerenn/continuous-schema-migration"
+	containerDir := "/go/src/github.com/lerenn/lazy-schema-migration"
 
 	return func(r *dagger.Container) *dagger.Container {
 		return r.

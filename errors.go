@@ -7,8 +7,8 @@ import (
 
 var (
 	// ErrGeneric is the generic error that can be used to isolate
-	// continuous-schema-migration errors.
-	ErrGeneric = errors.New("continuous schema migration error")
+	// lazy-schema-migration errors.
+	ErrGeneric = errors.New("lazy schema migration error")
 	// ErrNoVersion happens when no version is detected.
 	ErrNoVersion = fmt.Errorf("%w: no version detected", ErrGeneric)
 	// ErrInvalidVersionFormat happens when the version is not an integer.
